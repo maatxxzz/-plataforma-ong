@@ -50,12 +50,16 @@ header .marca{font:700 var(--texto-h3) var(--fonte-titulo);color:var(--neutro-10
 nav ul{display:flex;flex-wrap:wrap;gap:var(--espaco-4);list-style:none;margin:0;padding:0}
 nav a{color:var(--neutro-100);text-decoration:none;padding:var(--espaco-1) 0;border-bottom:3px solid transparent}
 nav a:hover,nav a[aria-current="page"]{border-color:var(--cor-secundaria)}
-main{max-width:var(--largura-max);margin:0 auto;padding:var(--espaco-5) var(--espaco-4)}
-.destaque{background:var(--neutro-200);padding:var(--espaco-6) var(--espaco-4);border-radius:var(--raio)}
+main{max-width:var(--largura-max);margin:0 auto;padding:var(--espaco-5) var(--espaco-3);display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--espaco-4)}
+main>*{grid-column:1/-1}
+.destaque{background:var(--neutro-200);padding:var(--espaco-5) var(--espaco-3);border-radius:var(--raio);display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--espaco-4)}
+.destaque>*{grid-column:1/-1}
+.destaque .botao{justify-self:start}
 .destaque h1{margin-top:0;max-width:20ch;color:var(--cor-primaria-escura)}
-.botao,button{background:var(--cor-secundaria);color:var(--neutro-900);font:700 var(--texto-base) var(--fonte-texto);border:0;border-radius:var(--raio);padding:var(--espaco-3) var(--espaco-4);text-decoration:none;display:inline-block;cursor:pointer}
+.botao,button{width:100%;text-align:center;background:var(--cor-secundaria);color:var(--neutro-900);font:700 var(--texto-base) var(--fonte-texto);border:0;border-radius:var(--raio);padding:var(--espaco-3) var(--espaco-4);text-decoration:none;display:inline-block;cursor:pointer}
 .botao:hover,button:hover{background:var(--cor-secundaria-escura)}
-.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:var(--espaco-4)}
+.grade{--span:12;display:grid;grid-template-columns:repeat(12,1fr);gap:var(--espaco-4)}
+.grade>*{grid-column:span var(--span)}
 article{border-left:5px solid var(--cor-primaria);padding:var(--espaco-2) var(--espaco-3);background:var(--neutro-200)}
 article h3{margin-top:0}
 aside{background:var(--neutro-200);border-left:5px solid var(--cor-apoio);padding:var(--espaco-3) var(--espaco-4);border-radius:var(--raio);margin-top:var(--espaco-5)}
@@ -74,4 +78,32 @@ address{font-style:normal}
 address p{margin:var(--espaco-1) 0}
 footer{background:var(--neutro-900);color:var(--neutro-100);padding:var(--espaco-4);text-align:center}
 footer a{color:var(--cor-secundaria)}
+/* ===== Breakpoints (mobile-first, grid de 12 colunas) ===== */
+/* 1. Celulares grandes: cards em 2 colunas (span 6 de 12) e botões com largura automática */
+@media(min-width:480px){
+  .grade{--span:6}
+  .botao,button{width:auto}
+  main{padding:var(--espaco-5) var(--espaco-4)}
+}
+/* 2. Tablets: destaque do início em duas áreas (texto 7 colunas, imagem 5 colunas) */
+@media(min-width:768px){
+  .destaque{padding:var(--espaco-6) var(--espaco-5)}
+  .destaque>*{grid-column:1/8}
+  .destaque img{grid-column:8/13;grid-row:1/span 3;align-self:center;margin:0}
+}
+/* 3. Notebooks: cards em 3 colunas (span 4) e formulários lado a lado (7 + 5 colunas) */
+@media(min-width:1024px){
+  .grade{--span:4}
+  .grade.duas{--span:6}
+  .col-7{grid-column:span 7}
+  .col-5{grid-column:span 5}
+}
+/* 4. Desktops: contêiner mais largo e texto maior */
+@media(min-width:1280px){
+  :root{--largura-max:72rem;--texto-base:1.125rem;--texto-h2:2rem}
+}
+/* 5. Telas panorâmicas: contêiner de 84rem e título principal maior */
+@media(min-width:1536px){
+  :root{--largura-max:84rem;--texto-h1:3.25rem}
+}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
