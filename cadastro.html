@@ -55,7 +55,7 @@
 
     <section class="col-7" aria-labelledby="t-vol">
       <h2 id="t-vol">Cadastro de voluntário</h2>
-      <form action="#" method="post">
+      <form action="" method="get" onsubmit="return false">
         <fieldset>
           <legend>Dados pessoais</legend>
           <label for="v-nome">Nome completo *</label>
@@ -123,7 +123,7 @@
 
     <section class="col-5" aria-labelledby="t-doa">
       <h2 id="t-doa">Cadastro de doador</h2>
-      <form action="#" method="post">
+      <form action="" method="get" onsubmit="return false">
         <fieldset>
           <legend>Dados do doador</legend>
           <label for="d-nome">Nome completo *</label>
@@ -147,16 +147,20 @@
       </form>
     </section>
 
-    <div class="modal-fundo" role="dialog" aria-modal="true" aria-labelledby="t-modal">
-      <div class="modal">
-        <h2 id="t-modal">Confirmar doação mensal?</h2>
-        <p>Você fará uma doação de <strong>R$ 30,00</strong> todo mês para o Instituto Semear. Você pode cancelar quando quiser pelo e-mail de confirmação.</p>
-        <div class="acoes">
-          <button type="button" class="botao-secundario">Cancelar</button>
-          <button type="button">Confirmar doação</button>
+    <section class="exemplo-modal" aria-labelledby="t-exemplo-modal">
+      <h2 id="t-exemplo-modal">Exemplo: confirmação de doação</h2>
+      <p class="dica">Assim é a janela que confirma o envio de uma doação recorrente.</p>
+      <div class="modal-fundo-estatico">
+        <div class="modal">
+          <h3 id="t-modal">Confirmar doação mensal?</h3>
+          <p>Você fará uma doação de <strong>R$ 30,00</strong> todo mês para o Instituto Semear. Você pode cancelar quando quiser pelo e-mail de confirmação.</p>
+          <div class="acoes">
+            <button type="button" class="botao-secundario">Cancelar</button>
+            <button type="button">Confirmar doação</button>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   </main>
   <div class="toast toast-sucesso" role="status">
     <span aria-hidden="true">🌱</span>
