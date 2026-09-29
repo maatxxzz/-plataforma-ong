@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Conheça os projetos sociais do Instituto Semear.">
+  <title>Projetos | Instituto Semear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <header>
+    <a class="marca" href="index.html">Instituto Semear</a>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle-input" aria-label="Abrir menu" aria-controls="menu-principal">
+    <label for="menu-toggle" class="menu-toggle-label">
+      <span class="hamburguer"></span>
+    </label>
+    <nav aria-label="Principal" id="menu-principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li class="tem-submenu">
+          <details open>
+            <summary>Projetos</summary>
+            <ul class="submenu">
+              <li><a href="projetos.html">Ver todos os projetos</a></li>
+              <li><a href="projetos.html#t-vol">Seja voluntário</a></li>
+              <li><a href="projetos.html#t-doa">Campanhas de doação</a></li>
+            </ul>
+          </details>
+        </li>
+        <li><a href="cadastro.html">Participe</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="conteudo">
+    <h1>Projetos e serviços sociais</h1>
+
+    <section aria-labelledby="t-proj">
+      <h2 id="t-proj">Onde atuamos</h2>
+      <div class="grade">
+        <article><span class="badge badge-educacao">Educação</span><h3>Semear Leitura</h3><p>Rodas de leitura e biblioteca comunitária aos sábados.</p></article>
+        <article><span class="badge badge-alimentacao">Alimentação</span><h3>Prato Cheio</h3><p>Refeições diárias e oficinas de alimentação saudável.</p></article>
+        <article><span class="badge badge-educacao">Educação</span><h3>Futuro em Cartaz</h3><p>Orientação para jovens sobre estudo e primeiro emprego.</p></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="t-vol">
+      <h2 id="t-vol">Seja voluntário</h2>
+      <p>Você pode doar algumas horas por semana em uma destas atividades:</p>
+      <ul>
+        <li>Reforço escolar de leitura e matemática</li>
+        <li>Preparo e distribuição de refeições</li>
+        <li>Organização de eventos e da biblioteca</li>
+      </ul>
+      <a class="botao" href="cadastro.html#t-vol">Quero ser voluntário</a>
+    </section>
+
+    <section aria-labelledby="t-doa">
+      <h2 id="t-doa">Campanhas de doação</h2>
+      <div class="grade duas">
+        <article><span class="badge badge-doacao">Doação</span> <span class="badge badge-urgente">Urgente</span><h3>Kit material escolar</h3><p>R$ 60 garantem cadernos, lápis e mochila para uma criança.</p></article>
+        <article><span class="badge badge-doacao">Doação</span><h3>Semana de refeições</h3><p>R$ 30 garantem uma semana de almoço para uma criança.</p></article>
+      </div>
+      <p><a class="botao" href="cadastro.html#t-doa">Quero doar</a></p>
+    </section>
+
+    <aside aria-labelledby="t-ajuda">
+      <h2 id="t-ajuda">Como ajudar</h2>
+      <ol>
+        <li>Escolha entre ser voluntário ou fazer uma doação.</li>
+        <li>Preencha o cadastro correspondente.</li>
+        <li>Aguarde nosso contato por e-mail.</li>
+      </ol>
+    </aside>
+  </main>
+  <footer>
+    <p>&copy; 2026 Instituto Semear. Projeto fictício para fins educacionais.</p>
+    <p><a href="cadastro.html">Seja voluntário ou doador</a></p>
+  </footer>
+  <script src="../js/scripts.js" defer></script>
+</body>
+</html>
