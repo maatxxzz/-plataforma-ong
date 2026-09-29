@@ -184,11 +184,15 @@ footer a{color:var(--cor-secundaria)}
 .toast-fechar{background:transparent;color:var(--neutro-100);width:auto;padding:0 0 0 var(--espaco-2);font-size:1.1rem;line-height:1}
 .toast-fechar:hover{background:transparent;color:var(--cor-secundaria)}
 
-/* Modal: janela sobreposta com fundo escurecido */
-.modal-fundo{position:fixed;inset:0;background:rgba(22,36,31,.6);display:flex;align-items:center;justify-content:center;padding:var(--espaco-4);z-index:30}
+/* Modal: janela sobreposta com fundo escurecido.
+   .modal-fundo (position:fixed) é a versão real, usada quando um script abre o modal
+   por cima de toda a página. .modal-fundo-estatico é só para exibir o exemplo
+   dentro do fluxo normal da página, sem cobrir o formulário. */
+.modal-fundo,.modal-fundo-estatico{background:rgba(22,36,31,.6);display:flex;align-items:center;justify-content:center;padding:var(--espaco-4);border-radius:var(--raio)}
+.modal-fundo{position:fixed;inset:0;z-index:30}
+.modal-fundo-estatico{margin-top:var(--espaco-3)}
 .modal{background:var(--neutro-100);border-radius:var(--raio);max-width:26rem;width:100%;padding:var(--espaco-5);box-shadow:0 1rem 2.5rem rgba(0,0,0,.3)}
 .modal h2{margin-top:0}
 .modal .acoes{display:flex;gap:var(--espaco-3);justify-content:flex-end;margin-top:var(--espaco-4)}
 .modal .botao-secundario{background:var(--neutro-200);color:var(--neutro-900)}
 .modal .botao-secundario:hover{background:var(--neutro-500);color:var(--neutro-100)}
-
