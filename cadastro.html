@@ -39,6 +39,20 @@
     <h1>Faça parte da nossa causa</h1>
     <p class="dica">Campos com * são obrigatórios.</p>
 
+    <div class="alerta alerta-info" role="status">
+      <span class="alerta-icone" aria-hidden="true">ℹ</span>
+      <div><strong>Antes de começar:</strong> tenha em mãos seu CPF e CEP para preencher o cadastro mais rápido.</div>
+    </div>
+    <div class="alerta alerta-sucesso" role="status">
+      <span class="alerta-icone" aria-hidden="true">✔</span>
+      <div><strong>Cadastro enviado com sucesso!</strong> Em breve entraremos em contato pelo e-mail informado.</div>
+    </div>
+    <div class="alerta alerta-erro" role="alert">
+      <span class="alerta-icone" aria-hidden="true">⚠</span>
+      <div><strong>Não foi possível enviar o formulário.</strong> Verifique os campos destacados em vermelho e tente novamente.</div>
+    </div>
+
+
     <section class="col-7" aria-labelledby="t-vol">
       <h2 id="t-vol">Cadastro de voluntário</h2>
       <form action="#" method="post">
@@ -132,7 +146,23 @@
         <button type="submit">Enviar cadastro de doador</button>
       </form>
     </section>
+
+    <div class="modal-fundo" role="dialog" aria-modal="true" aria-labelledby="t-modal">
+      <div class="modal">
+        <h2 id="t-modal">Confirmar doação mensal?</h2>
+        <p>Você fará uma doação de <strong>R$ 30,00</strong> todo mês para o Instituto Semear. Você pode cancelar quando quiser pelo e-mail de confirmação.</p>
+        <div class="acoes">
+          <button type="button" class="botao-secundario">Cancelar</button>
+          <button type="button">Confirmar doação</button>
+        </div>
+      </div>
+    </div>
   </main>
+  <div class="toast toast-sucesso" role="status">
+    <span aria-hidden="true">🌱</span>
+    <span>Cadastro de voluntário enviado!</span>
+    <button type="button" class="toast-fechar" aria-label="Fechar aviso">&times;</button>
+  </div>
   <footer>
     <p>&copy; 2026 Instituto Semear. Projeto fictício para fins educacionais.</p>
     <p><a href="cadastro.html">Seja voluntário ou doador</a></p>
