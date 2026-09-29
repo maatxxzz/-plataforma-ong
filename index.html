@@ -13,11 +13,24 @@
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
   <header>
     <a class="marca" href="index.html">Instituto Semear</a>
-    <nav aria-label="Principal">
+    <input type="checkbox" id="menu-toggle" class="menu-toggle-input" aria-hidden="true">
+    <label for="menu-toggle" class="menu-toggle-label" aria-label="Abrir menu" aria-controls="menu-principal">
+      <span class="hamburguer"></span>
+    </label>
+    <nav aria-label="Principal" id="menu-principal">
       <ul>
         <li><a href="index.html" aria-current="page">Início</a></li>
         <li><a href="sobre.html">Sobre</a></li>
-        <li><a href="projetos.html">Projetos</a></li>
+        <li class="tem-submenu">
+          <details>
+            <summary>Projetos</summary>
+            <ul class="submenu">
+              <li><a href="projetos.html">Ver todos os projetos</a></li>
+              <li><a href="projetos.html#t-vol">Seja voluntário</a></li>
+              <li><a href="projetos.html#t-doa">Campanhas de doação</a></li>
+            </ul>
+          </details>
+        </li>
         <li><a href="cadastro.html">Participe</a></li>
       </ul>
     </nav>
