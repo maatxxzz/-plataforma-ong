@@ -45,11 +45,54 @@ a{color:var(--cor-primaria)}
 header :focus-visible,footer :focus-visible{outline-color:var(--cor-secundaria)}
 .pular{position:absolute;left:-999px}
 .pular:focus{left:var(--espaco-3);top:var(--espaco-3);background:var(--cor-secundaria);padding:var(--espaco-2) var(--espaco-3);z-index:9}
-header{background:var(--cor-primaria);color:var(--neutro-100);padding:var(--espaco-3) var(--espaco-4);display:flex;flex-wrap:wrap;gap:var(--espaco-3);align-items:center;justify-content:space-between}
+header{background:var(--cor-primaria);color:var(--neutro-100);padding:var(--espaco-3) var(--espaco-4);display:flex;flex-wrap:wrap;gap:var(--espaco-3);align-items:center;justify-content:space-between;position:relative}
 header .marca{font:700 var(--texto-h3) var(--fonte-titulo);color:var(--neutro-100);text-decoration:none}
-nav ul{display:flex;flex-wrap:wrap;gap:var(--espaco-4);list-style:none;margin:0;padding:0}
-nav a{color:var(--neutro-100);text-decoration:none;padding:var(--espaco-1) 0;border-bottom:3px solid transparent}
-nav a:hover,nav a[aria-current="page"]{border-color:var(--cor-secundaria)}
+
+/* ---- Botão hambúrguer (checkbox hack, sem JS) ---- */
+.menu-toggle-input{position:absolute;left:-999px}
+.menu-toggle-label{display:flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;cursor:pointer;border-radius:var(--raio)}
+.hamburguer,.hamburguer::before,.hamburguer::after{display:block;width:1.5rem;height:3px;background:var(--neutro-100);border-radius:2px;transition:transform .2s ease,opacity .2s ease}
+.hamburguer{position:relative}
+.hamburguer::before,.hamburguer::after{content:"";position:absolute;left:0}
+.hamburguer::before{top:-.5rem}
+.hamburguer::after{top:.5rem}
+.menu-toggle-input:checked~.menu-toggle-label .hamburguer{background:transparent}
+.menu-toggle-input:checked~.menu-toggle-label .hamburguer::before{transform:translateY(.5rem) rotate(45deg)}
+.menu-toggle-input:checked~.menu-toggle-label .hamburguer::after{transform:translateY(-.5rem) rotate(-45deg)}
+.menu-toggle-input:focus-visible~.menu-toggle-label{outline:3px solid var(--cor-secundaria);outline-offset:2px}
+
+/* ---- Menu principal: fechado por padrão no mobile ---- */
+nav#menu-principal{display:none;width:100%;order:3}
+.menu-toggle-input:checked~nav#menu-principal{display:block}
+nav#menu-principal>ul{display:flex;flex-direction:column;gap:0;list-style:none;margin:0;padding:var(--espaco-2) 0 0}
+nav#menu-principal>ul>li{border-top:1px solid rgba(255,255,255,.15)}
+nav a{color:var(--neutro-100);text-decoration:none;padding:var(--espaco-2) 0;display:block;border-bottom:3px solid transparent}
+nav>ul>li>a:hover,nav>ul>li>a[aria-current="page"]{border-color:var(--cor-secundaria)}
+
+/* ---- Submenu em dropdown (elemento details/summary, sem JS) ---- */
+.tem-submenu details{margin:0}
+.tem-submenu summary{color:var(--neutro-100);padding:var(--espaco-2) 0;cursor:pointer;list-style:none}
+.tem-submenu summary::-webkit-details-marker{display:none}
+.tem-submenu summary::after{content:"▾";margin-left:var(--espaco-2);font-size:.8em}
+.tem-submenu details[open] summary::after{content:"▴"}
+.submenu{list-style:none;margin:0;padding:0 0 var(--espaco-2) var(--espaco-3);display:flex;flex-direction:column;gap:var(--espaco-1)}
+.submenu a{padding:var(--espaco-1) 0;font-size:var(--texto-pequeno)}
+
+/* ---- A partir de 600px: menu horizontal sempre visível, dropdown flutuante ---- */
+@media(min-width:600px){
+  .menu-toggle-label{display:none}
+  nav#menu-principal{display:block;width:auto;order:0}
+  nav#menu-principal>ul{flex-direction:row;flex-wrap:wrap;gap:var(--espaco-4);padding:0}
+  nav#menu-principal>ul>li{border-top:0}
+  nav a{padding:var(--espaco-1) 0}
+  .tem-submenu{position:relative}
+  .tem-submenu summary{padding:var(--espaco-1) 0}
+  .tem-submenu details[open] .submenu,.tem-submenu:hover .submenu,.tem-submenu:focus-within .submenu{display:flex}
+  .submenu{display:none;position:absolute;top:100%;left:0;background:var(--cor-primaria-escura);min-width:13rem;padding:var(--espaco-2);border-radius:var(--raio);box-shadow:0 .5rem 1rem rgba(0,0,0,.2);z-index:5;opacity:0;transform:translateY(-.25rem);transition:opacity .15s ease,transform .15s ease}
+  .tem-submenu details[open] .submenu,.tem-submenu:hover .submenu,.tem-submenu:focus-within .submenu{opacity:1;transform:translateY(0)}
+  .submenu a{padding:var(--espaco-2)}
+  .submenu a:hover{background:rgba(255,255,255,.1);border-radius:var(--raio)}
+}
 main{max-width:var(--largura-max);margin:0 auto;padding:var(--espaco-5) var(--espaco-3);display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--espaco-4)}
 main>*{grid-column:1/-1}
 .destaque{background:var(--neutro-200);padding:var(--espaco-5) var(--espaco-3);border-radius:var(--raio);display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--espaco-4)}
