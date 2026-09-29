@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="História, missão e transparência do Instituto Semear.">
+  <title>Sobre | Instituto Semear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <header>
+    <a class="marca" href="index.html">Instituto Semear</a>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle-input" aria-label="Abrir menu" aria-controls="menu-principal">
+    <label for="menu-toggle" class="menu-toggle-label">
+      <span class="hamburguer"></span>
+    </label>
+    <nav aria-label="Principal" id="menu-principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="sobre.html" aria-current="page">Sobre</a></li>
+        <li class="tem-submenu">
+          <details>
+            <summary>Projetos</summary>
+            <ul class="submenu">
+              <li><a href="projetos.html">Ver todos os projetos</a></li>
+              <li><a href="projetos.html#t-vol">Seja voluntário</a></li>
+              <li><a href="projetos.html#t-doa">Campanhas de doação</a></li>
+            </ul>
+          </details>
+        </li>
+        <li><a href="cadastro.html">Participe</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="conteudo">
+    <h1>Sobre o Instituto Semear</h1>
+    <section aria-labelledby="t-missao">
+      <h2 id="t-missao">Missão</h2>
+      <p>Garantir que crianças em vulnerabilidade tenham acesso à educação e à alimentação.</p>
+    </section>
+    <section aria-labelledby="t-hist">
+      <h2 id="t-hist">Nossa história</h2>
+      <h3>2016: o começo</h3>
+      <p>Um grupo de vizinhos abriu as portas de uma garagem para dar aulas de reforço.</p>
+      <h3>Hoje</h3>
+      <p>Atendemos 200 crianças com o trabalho de 40 voluntários.</p>
+    </section>
+    <section aria-labelledby="t-transp">
+      <h2 id="t-transp">Transparência</h2>
+      <p>Publicamos todo ano o relatório de atividades e a prestação de contas.</p>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2026 Instituto Semear. Projeto fictício para fins educacionais.</p>
+    <p><a href="cadastro.html">Seja voluntário ou doador</a></p>
+  </footer>
+  <script src="../js/scripts.js" defer></script>
+</body>
+</html>
