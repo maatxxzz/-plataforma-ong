@@ -13,6 +13,12 @@ function hex(rgb) {return '#'+rgb.map(x=>x.toString(16).padStart(2,'0')).join(''
   for(const mode of ['normal','alto']) {
    if(mode==='alto'){await p.locator('#alternar-contraste').focus();await p.keyboard.press('Enter');}
    assert.equal(await p.locator('html').getAttribute('data-contraste'),mode);
+   if(mode==='alto') {
+    // Verifica a entrada imediata, sem esperar o fim de uma animação.
+    assert.deepEqual(await p.locator('#d-nome').evaluate(e=>({
+      text:getComputedStyle(e).color, bg:getComputedStyle(e).backgroundColor
+    })), {text:'rgb(255, 255, 255)', bg:'rgb(0, 0, 0)'});
+   }
    for(const selector of ['body','header .marca','#alternar-contraste','main > .dica','#d-nome']) {
     const colors=await p.locator(selector).evaluate(e=>{
      const rgb=s=>s.match(/[\d.]+/g).slice(0,3).map(Number);
