@@ -150,6 +150,157 @@
   // Exceção: o link "Pular para o conteúdo" aponta para "#app" (o próprio
   // main), que não é uma rota. Nesse caso deixamos o navegador fazer o
   // salto de foco normal, sem trocar o conteúdo exibido.
+  // ---------------------------------------------------------------------
+  // Eventos de interação com EVENT DELEGATION: os listeners ficam no
+  // document (que nunca é substituído) e usam e.target / closest() para
+  // descobrir qual elemento disparou. Assim funcionam também nos
+  // formulários e botões que só passam a existir depois que o roteador
+  // clona o <template> para dentro de #app.
+  // ---------------------------------------------------------------------
+
+  function soDigitos(v) { return v.replace(/\D/g, ""); }
+
+  // Máscaras aplicadas enquanto o usuário digita (evento "input")
+  var mascaras = {
+    "v-cpf": function (v) {
+      v = soDigitos(v).slice(0, 11);
+      return v.replace(/(\d{3})(\d)/, "$1.$2")
+              .replace(/(\d{3})(\d)/, "$1.$2")
+              .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    },
+    "v-cep": function (v) {
+      return soDigitos(v).slice(0, 8).replace(/(\d{5})(\d)/, "$1-$2");
+    },
+    "v-tel": function (v) {
+      v = soDigitos(v).slice(0, 11);
+      if (v.length > 10) return v.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+      if (v.length > 6) return v.replace(/^(\d{2})(\d{4})(\d{0,4})$/, "($1) $2-$3");
+      if (v.length > 2) return v.replace(/^(\d{2})(\d*)$/, "($1) $2");
+      return v;
+    },
+  };
+
+  document.addEventListener("input", function (e) {
+    var campo = e.target;
+    if (mascaras[campo.id]) campo.value = mascaras[campo.id](campo.value);
+  });
+
+  // Toast: aviso temporário criado dinamicamente no canto da tela
+  var timerToast = null;
+  function mostrarToast(mensagem) {
+    fecharToast();
+    var toast = document.createElement("div");
+    toast.className = "toast toast-sucesso";
+    toast.setAttribute("role", "status");
+    var texto = document.createElement("span");
+    texto.textContent = mensagem;
+    var fechar = document.createElement("button");
+    fechar.type = "button";
+    fechar.className = "toast-fechar";
+    fechar.dataset.acao = "fechar-toast";
+    fechar.setAttribute("aria-label", "Fechar aviso");
+    fechar.textContent = "×";
+    toast.append(texto, fechar);
+    document.body.appendChild(toast);
+    timerToast = setTimeout(fecharToast, 5000);
+  }
+  function fecharToast() {
+    clearTimeout(timerToast);
+    var toast = document.querySelector(".toast");
+    if (toast) toast.remove();
+  }
+
+  // Modal de confirmação da doação mensal
+  var formPendente = null;
+  function abrirModal(form) {
+    var valor = Number(form.elements["valor"].value).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    formPendente = form;
+    var fundo = document.createElement("div");
+    fundo.className = "modal-fundo";
+    fundo.innerHTML =
+      '<div class="modal" role="dialog" aria-modal="true" aria-labelledby="t-modal-real">' +
+      '<h2 id="t-modal-real">Confirmar doação mensal?</h2>' +
+      "<p>Você fará uma doação de <strong>" + valor + "</strong> todo mês para o Instituto Semear.</p>" +
+      '<div class="acoes">' +
+      '<button type="button" class="botao-secundario" data-acao="cancelar-modal">Cancelar</button>' +
+      '<button type="button" data-acao="confirmar-modal">Confirmar doação</button>' +
+      "</div></div>";
+    document.body.appendChild(fundo);
+    fundo.querySelector('[data-acao="confirmar-modal"]').focus();
+  }
+  function fecharModal() {
+    var fundo = document.querySelector(".modal-fundo");
+    if (fundo) fundo.remove();
+    formPendente = null;
+  }
+
+  // Conclui o envio: mostra o alerta de sucesso, limpa o formulário e avisa com toast
+  function concluirEnvio(form) {
+    var ok = document.querySelector(".alerta-sucesso");
+    if (ok) ok.hidden = false;
+    form.reset();
+    mostrarToast("Cadastro enviado com sucesso!");
+  }
+
+  // Evento "submit": preventDefault() impede o envio/recarregamento da página
+  // e a validação passa a ser feita pelo JavaScript (Constraint Validation API)
+  document.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var form = e.target;
+    var erro = document.querySelector(".alerta-erro");
+    var ok = document.querySelector(".alerta-sucesso");
+
+    if (!form.checkValidity()) {
+      if (ok) ok.hidden = true;
+      if (erro) erro.hidden = false;
+      form.reportValidity(); // foca o primeiro campo inválido e mostra a mensagem
+      return;
+    }
+    if (erro) erro.hidden = true;
+
+    var freq = form.elements["frequencia"];
+    if (freq && freq.value === "mensal") {
+      abrirModal(form); // doação recorrente pede confirmação antes de enviar
+      return;
+    }
+    concluirEnvio(form);
+  });
+
+  // Evento "click" delegado: botões com data-acao, links do menu e "pular conteúdo"
+  document.addEventListener("click", function (e) {
+    var acao = e.target.closest("[data-acao]");
+    if (acao) {
+      var tipo = acao.dataset.acao;
+      if (tipo === "fechar-toast") fecharToast();
+      if (tipo === "cancelar-modal") fecharModal();
+      if (tipo === "confirmar-modal") {
+        var form = formPendente;
+        fecharModal();
+        if (form) concluirEnvio(form);
+      }
+      return;
+    }
+
+    // Clicar em um link do menu fecha o menu hambúrguer e o submenu
+    if (e.target.closest("#menu-principal a")) {
+      document.getElementById("menu-toggle").checked = false;
+      var detalhes = document.querySelector(".tem-submenu details");
+      if (detalhes) detalhes.open = false;
+    }
+
+    // "Pular para o conteúdo": preventDefault evita mudar o hash (que
+    // acionaria o roteador) e o foco vai direto para o <main>
+    if (e.target.closest(".pular")) {
+      e.preventDefault();
+      app.focus();
+    }
+  });
+
+  // Tecla Esc fecha o modal
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") fecharModal();
+  });
+
   window.addEventListener("hashchange", function () {
     if (lerHash().reconhecida) renderizarRota();
   });
