@@ -95,3 +95,7 @@ Adota-se Conventional Commits (`tipo: descrição`), com tipos como `feat`, `fix
 ## Limitações
 
 O projeto é uma demonstração educacional: não possui backend, autenticação, envio real de cadastros ou processamento de pagamentos. Os dados ficam no navegador e não são sincronizados. Evite dados pessoais reais nos testes. A navegação funciona sem conexão após carregar a SPA; recarregar totalmente offline exige recursos adicionais, como service worker, ainda não implementados. O gráfico e as fontes dependem de acesso aos respectivos CDNs.
+
+## Perfil de alto contraste
+
+O botão Alto contraste alterna o perfil visual, indica seu estado com `aria-pressed` e salva a preferência no navegador. Sem preferência salva, respeita `prefers-contrast: more`. O modo usa preto, branco e amarelo, com estados identificados também por texto e ARIA. Consulte [medições de contraste](docs/contraste.md); execute `node tests/contraste.cjs` para repetir as verificações. Não existe dark mode separado.
