@@ -26,6 +26,7 @@ function fecharToast() {
 // Modal de confirmação da doação mensal
 var confirmarPendente = null;
 var focoAnterior = null;
+var elementosInertes = [];
 export function abrirModal(valorDoacao, aoConfirmar) {
   fecharModal();
   focoAnterior = document.activeElement;
@@ -34,19 +35,25 @@ export function abrirModal(valorDoacao, aoConfirmar) {
   var fundo = document.createElement("div");
   fundo.className = "modal-fundo";
   fundo.innerHTML =
-    '<div class="modal" role="dialog" aria-modal="true" aria-labelledby="t-modal-real">' +
+    '<div class="modal" role="dialog" aria-modal="true" aria-labelledby="t-modal-real" aria-describedby="descricao-modal-real">' +
     '<h2 id="t-modal-real">Confirmar doação mensal?</h2>' +
-    "<p>Você fará uma doação de <strong>" + valor + "</strong> todo mês para o Instituto Semear.</p>" +
+    '<p id="descricao-modal-real">Você fará uma doação de <strong>' + valor + "</strong> todo mês para o Instituto Semear.</p>" +
     '<div class="acoes">' +
     '<button type="button" class="botao-secundario" data-acao="cancelar-modal">Cancelar</button>' +
     '<button type="button" data-acao="confirmar-modal">Confirmar doação</button>' +
     "</div></div>";
   document.body.appendChild(fundo);
+  elementosInertes = Array.from(document.body.children).filter(function (el) {
+    return el !== fundo && !el.inert && !["SCRIPT", "TEMPLATE"].includes(el.tagName);
+  });
+  elementosInertes.forEach(function (el) { el.inert = true; });
   fundo.querySelector('[data-acao="confirmar-modal"]').focus();
 }
 function fecharModal() {
   var fundo = document.querySelector(".modal-fundo");
   if (fundo) fundo.remove();
+  elementosInertes.forEach(function (el) { el.inert = false; });
+  elementosInertes = [];
   confirmarPendente = null;
   if (focoAnterior && focoAnterior.isConnected) focoAnterior.focus();
   focoAnterior = null;

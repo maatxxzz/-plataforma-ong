@@ -61,6 +61,9 @@ function renderizarRota(aposRenderizar) {
 
   document.title = titulos[atual.rota] + " | Instituto Semear";
   marcarLinkAtivo(atual.rota);
+  // Anuncia a nova página pelo foco, sem tornar todo o main uma região live.
+  var titulo = app.querySelector("h1");
+  if (titulo) { titulo.tabIndex = -1; titulo.focus({ preventScroll: true }); }
 
   // Se a rota pedia uma âncora específica (ex.: #/projetos/t-vol),
   // rola a tela até o elemento com esse id depois de o conteúdo existir
