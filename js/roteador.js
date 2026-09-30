@@ -14,7 +14,7 @@ function lerHash() {
   var partes = hash.split("/").filter(Boolean); // remove vazios
   var bruto = partes[0] || "inicio";
   var ancora = partes[1] || null;
-  var reconhecida = Boolean(titulos[bruto]);
+  var reconhecida = Object.hasOwn(titulos, bruto);
   var rota = reconhecida ? bruto : "inicio";
   return { rota: rota, ancora: ancora, reconhecida: reconhecida || !partes[0] };
 }
@@ -53,6 +53,8 @@ function renderizarRota(aposRenderizar) {
     return;
   }
 
+  document.dispatchEvent(new Event("semear:antes-de-navegar"));
+
   // Limpa o container alvo e injeta o novo conteúdo (clone do template)
   app.replaceChildren(template.content.cloneNode(true));
   aposRenderizar();
@@ -75,7 +77,7 @@ function renderizarRota(aposRenderizar) {
 
 export function iniciarRoteador(aposRenderizar) {
   window.addEventListener("hashchange", function () {
-    if (lerHash().reconhecida) renderizarRota(aposRenderizar);
+    if (window.location.hash !== "#app") renderizarRota(aposRenderizar);
   });
   document.addEventListener("click", function (e) {
     if (e.target.closest("#menu-principal a")) {

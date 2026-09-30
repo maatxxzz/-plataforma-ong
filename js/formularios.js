@@ -18,14 +18,25 @@ function registrarCadastro(form) {
     registro.valor = Number(form.elements["valor"].value);
     registro.frequencia = form.elements["frequencia"].value;
   }
-  adicionarCadastro(registro);
+  return adicionarCadastro(registro);
+}
+
+function mostrarErro(mensagem) {
+  var erro = document.querySelector(".alerta-erro");
+  if (erro) { erro.querySelector("div").textContent = mensagem; erro.hidden = false; }
+  var ok = document.querySelector(".alerta-sucesso");
+  if (ok) ok.hidden = true;
 }
 
 // Conclui o envio: mostra o alerta de sucesso, limpa o formulário e avisa com toast
 function concluirEnvio(form) {
+  if (!form.isConnected) return;
+  if (!registrarCadastro(form)) {
+    mostrarErro("Não foi possível salvar neste navegador. Seus dados continuam no formulário; verifique o armazenamento e tente novamente.");
+    return;
+  }
   var ok = document.querySelector(".alerta-sucesso");
   if (ok) ok.hidden = false;
-  registrarCadastro(form); // antes do reset(), enquanto os campos ainda têm valor
   form.reset();
   limparEstados(form);
   renderizarHistorico();
@@ -42,8 +53,7 @@ export function iniciarFormularios() {
     var ok = document.querySelector(".alerta-sucesso");
 
     if (!validarFormulario(form)) {
-      if (ok) ok.hidden = true;
-      if (erro) erro.hidden = false;
+      mostrarErro("Verifique os campos destacados em vermelho e tente novamente.");
       return;
     }
     if (erro) erro.hidden = true;
@@ -58,7 +68,7 @@ export function iniciarFormularios() {
 
   document.addEventListener("click", function (e) {
     if (e.target.closest('[data-acao="limpar-historico"]')) {
-      limparCadastros();
+      if (!limparCadastros()) { mostrarErro("Não foi possível apagar o histórico neste navegador. Tente novamente."); return; }
       renderizarHistorico();
       mostrarToast("Histórico apagado.");
     }

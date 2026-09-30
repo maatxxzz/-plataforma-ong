@@ -25,7 +25,10 @@ function fecharToast() {
 
 // Modal de confirmação da doação mensal
 var confirmarPendente = null;
+var focoAnterior = null;
 export function abrirModal(valorDoacao, aoConfirmar) {
+  fecharModal();
+  focoAnterior = document.activeElement;
   var valor = Number(valorDoacao).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   confirmarPendente = aoConfirmar;
   var fundo = document.createElement("div");
@@ -45,10 +48,16 @@ function fecharModal() {
   var fundo = document.querySelector(".modal-fundo");
   if (fundo) fundo.remove();
   confirmarPendente = null;
+  if (focoAnterior && focoAnterior.isConnected) focoAnterior.focus();
+  focoAnterior = null;
 }
 
 
 export function iniciarFeedback() {
+  document.addEventListener("semear:antes-de-navegar", function () {
+    fecharModal();
+    fecharToast();
+  });
   document.addEventListener("click", function (e) {
     var acao = e.target.closest("[data-acao]");
     if (!acao) return;
@@ -62,5 +71,12 @@ export function iniciarFeedback() {
   });
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") fecharModal();
+    var modal = document.querySelector(".modal-fundo");
+    if (e.key === "Tab" && modal) {
+      var botoes = modal.querySelectorAll("button");
+      var primeiro = botoes[0], ultimo = botoes[botoes.length - 1];
+      if (e.shiftKey && document.activeElement === primeiro) { e.preventDefault(); ultimo.focus(); }
+      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primeiro.focus(); }
+    }
   });
 }

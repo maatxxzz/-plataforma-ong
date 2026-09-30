@@ -88,7 +88,11 @@ function obterMensagem(c) {
     if (!c.required) return "";
     return c.tagName === "SELECT" ? "Selecione uma opção." : "Preencha este campo.";
   }
-  return validadores[c.name] ? validadores[c.name](v) : "";
+  var mensagem = validadores[c.name] ? validadores[c.name](v) : "";
+  if (mensagem) return mensagem;
+  if (c.validity.stepMismatch) return "Use no máximo duas casas decimais para o valor.";
+  if (!c.validity.valid) return c.validationMessage || "Confira o valor informado.";
+  return "";
 }
 
 // Manipulação condicional do DOM: alterna as classes de estado, os
