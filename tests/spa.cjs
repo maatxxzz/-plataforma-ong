@@ -35,6 +35,7 @@ let total = 0;
         await p.evaluate(r => location.hash = '#/' + r, r);
         await p.waitForFunction(t => document.title.startsWith(t), title);
         assert(await p.locator('main h1').isVisible());
+        assert.equal(await p.locator('main h1').evaluate(e => e === document.activeElement), true);
         if (r === 'inicio') { assert.equal(await p.locator('#lista-trabalho article').count(), 3); assert.match(await p.locator('main').innerText(), /Não foi possível carregar o gráfico/); }
         if (r === 'projetos') assert.equal(await p.locator('#lista-projetos article').count(), 3);
       }
@@ -49,7 +50,14 @@ let total = 0;
       }
     });
     await test('Campos vazios, email inválido, valor mínimo e precisão', async p => {
+      assert.equal(await p.getByRole('banner').count(), 1);
+      assert.equal(await p.getByRole('navigation', {name:'Principal'}).count(), 1);
+      assert.equal(await p.getByRole('main').count(), 1);
+      assert.equal(await p.getByRole('contentinfo').count(), 1);
+      assert.equal(await p.getByRole('form', {name:'Cadastro de doador'}).count(), 1);
       await submit(p); assert.equal(await p.locator('.msg-campo').count(), 5);
+      assert.equal(await p.locator('#d-nome').getAttribute('aria-invalid'), 'true');
+      assert.equal(await p.locator('#d-nome').getAttribute('aria-describedby'), 'erro-d-nome');
       await donor(p, '4.99'); await submit(p); assert.equal(await count(p), 0);
       await donor(p, '5.001'); await submit(p); assert.match(await p.locator('#erro-d-valor').innerText(), /duas casas/); assert.equal(await count(p), 0);
       await donor(p); await p.locator('#d-email').fill('email-invalido'); await submit(p); assert.equal(await count(p), 0);
@@ -79,9 +87,14 @@ let total = 0;
     });
     await test('Modal: cancelar, foco, Escape e confirmar', async p => {
       await donor(p, '10', 'mensal'); await submit(p);
+      assert.equal(await p.getByRole('dialog', {name:'Confirmar doação mensal?'}).count(), 1);
+      assert.equal(await p.getByRole('dialog').getAttribute('aria-describedby'), 'descricao-modal-real');
+      assert.equal(await p.locator('main').evaluate(e=>e.inert), true);
       await p.keyboard.press('Tab'); assert.equal(await p.locator('[data-acao=cancelar-modal]').evaluate(e=>e===document.activeElement), true);
       await p.keyboard.press('Shift+Tab'); assert.equal(await p.locator('[data-acao=confirmar-modal]').evaluate(e=>e===document.activeElement), true);
       await p.keyboard.press('Escape'); assert.equal(await p.locator('.modal-fundo').count(), 0); assert.equal(await count(p), 0);
+      assert.equal(await p.locator('main').evaluate(e=>e.inert), false);
+      assert.equal(await p.locator('form').last().locator('button[type=submit]').evaluate(e=>e===document.activeElement), true);
       await submit(p); await p.locator('[data-acao=cancelar-modal]').click(); assert.equal(await count(p), 0);
       await submit(p); await p.locator('[data-acao=confirmar-modal]').click(); assert.equal(await count(p), 1);
     });

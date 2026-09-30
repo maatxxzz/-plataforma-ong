@@ -36,7 +36,7 @@
     </nav>
   </header>
 
-  <main id="app" aria-live="polite" tabindex="-1"></main>
+  <main id="app" tabindex="-1"></main>
 
   <template id="rota-inicio">
     <section class="destaque" aria-labelledby="t-inicio">
@@ -151,7 +151,7 @@
 
     <section class="col-7" aria-labelledby="t-vol">
       <h2 id="t-vol">Cadastro de voluntário</h2>
-      <form action="" method="get" onsubmit="return false" novalidate>
+      <form aria-labelledby="t-vol" action="" method="get" onsubmit="return false" novalidate>
         <fieldset>
           <legend>Dados pessoais</legend>
           <label for="v-nome">Nome completo *</label>
@@ -219,7 +219,7 @@
 
     <section class="col-5" aria-labelledby="t-doa">
       <h2 id="t-doa">Cadastro de doador</h2>
-      <form action="" method="get" onsubmit="return false" novalidate>
+      <form aria-labelledby="t-doa" action="" method="get" onsubmit="return false" novalidate>
         <fieldset>
           <legend>Dados do doador</legend>
           <label for="d-nome">Nome completo *</label>
@@ -258,8 +258,8 @@
           <h3 id="t-modal">Confirmar doação mensal?</h3>
           <p>Você fará uma doação de <strong>R$ 30,00</strong> todo mês para o Instituto Semear. Você pode cancelar quando quiser pelo e-mail de confirmação.</p>
           <div class="acoes">
-            <button type="button" class="botao-secundario">Cancelar</button>
-            <button type="button">Confirmar doação</button>
+            <button type="button" class="botao-secundario" disabled>Cancelar</button>
+            <button type="button" disabled>Confirmar doação</button>
           </div>
         </div>
       </div>
