@@ -205,3 +205,6 @@ footer a{color:var(--cor-secundaria)}
 input.campo-erro,select.campo-erro,textarea.campo-erro,fieldset.campo-erro{border-color:var(--cor-erro);background:var(--cor-erro-fundo)}
 input.campo-ok,select.campo-ok,textarea.campo-ok{border-color:var(--cor-apoio)}
 input[type=checkbox].campo-erro{outline:2px solid var(--cor-erro);outline-offset:2px}
+.botao-secundario{background:var(--neutro-200);color:var(--neutro-900)}
+.botao-secundario:hover{background:var(--neutro-500);color:var(--neutro-100)}
+#historico{margin-bottom:var(--espaco-3)}
