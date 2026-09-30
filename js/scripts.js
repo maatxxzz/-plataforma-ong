@@ -70,6 +70,7 @@
     preencherLista("lista-trabalho", trabalho);
     preencherLista("lista-projetos", projetos);
     preencherLista("lista-campanhas", campanhas);
+    renderizarHistorico();
   }
 
   // Título de cada rota, para atualizar <title> e a acessibilidade
@@ -382,12 +383,100 @@
     formPendente = null;
   }
 
+  // ---------------------------------------------------------------------
+  // Persistência com localStorage: histórico dos cadastros enviados.
+  // O localStorage só guarda strings, então o array de objetos é
+  // convertido com JSON.stringify ao gravar e reconstruído com
+  // JSON.parse ao ler.
+  // ---------------------------------------------------------------------
+  var CHAVE = "semear:cadastros";
+  var rotulosArea = { educacao: "Reforço escolar", alimentacao: "Alimentação", eventos: "Eventos" };
+
+  function lerCadastros() {
+    try {
+      var bruto = localStorage.getItem(CHAVE);          // string ou null
+      var lista = bruto ? JSON.parse(bruto) : [];        // string -> array
+      return Array.isArray(lista) ? lista : [];          // garante a estrutura esperada
+    } catch (err) {
+      return []; // JSON corrompido ou storage indisponível: começa vazio
+    }
+  }
+
+  function salvarCadastros(lista) {
+    try {
+      localStorage.setItem(CHAVE, JSON.stringify(lista)); // array -> string
+    } catch (err) { /* modo privado ou cota cheia: o site segue funcionando */ }
+  }
+
+  // Monta o registro (sem CPF, telefone ou endereço, por serem dados sensíveis)
+  function registrarCadastro(form) {
+    var voluntario = Boolean(form.elements["cpf"]);
+    var registro = {
+      tipo: voluntario ? "voluntario" : "doador",
+      nome: form.elements["nome"].value.trim(),
+      email: form.elements["email"].value.trim(),
+      data: new Date().toISOString(),
+    };
+    if (voluntario) {
+      registro.area = form.elements["area"].value;
+    } else {
+      registro.valor = Number(form.elements["valor"].value);
+      registro.frequencia = form.elements["frequencia"].value;
+    }
+    var lista = lerCadastros();       // get + parse
+    lista.unshift(registro);          // o mais recente primeiro
+    salvarCadastros(lista.slice(0, 20)); // stringify + set (guarda no máximo 20)
+  }
+
+  function criar(tag, classe, texto) {
+    var el = document.createElement(tag);
+    if (classe) el.className = classe;
+    if (texto !== undefined) el.textContent = texto; // textContent evita injetar HTML digitado pelo usuário
+    return el;
+  }
+
+  // Reconstrói a interface a partir do que está salvo. É chamada em toda
+  // renderização de rota, então também roda quando a página é aberta de novo.
+  function renderizarHistorico() {
+    var container = document.getElementById("historico");
+    if (!container) return;
+    var lista = lerCadastros();
+    var botao = document.querySelector('[data-acao="limpar-historico"]');
+    if (botao) botao.hidden = lista.length === 0;
+
+    if (!lista.length) {
+      container.replaceChildren(criar("p", "dica", "Nenhum cadastro enviado neste navegador ainda."));
+      return;
+    }
+    container.replaceChildren.apply(container, lista.map(function (r) {
+      var card = criar("article");
+      var ehVol = r.tipo === "voluntario";
+      card.append(
+        criar("span", "badge " + (ehVol ? "badge-voluntario" : "badge-doacao"), ehVol ? "Voluntário" : "Doador"),
+        criar("h3", "", r.nome),
+        criar("p", "", ehVol
+          ? "Área: " + (rotulosArea[r.area] || r.area)
+          : Number(r.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) +
+            (r.frequencia === "mensal" ? " por mês" : " (doação única)")),
+        criar("p", "dica", new Date(r.data).toLocaleString("pt-BR"))
+      );
+      return card;
+    }));
+  }
+
+  function limparCadastros() {
+    try { localStorage.removeItem(CHAVE); } catch (err) { /* ignora */ }
+    renderizarHistorico();
+  }
+
   // Conclui o envio: mostra o alerta de sucesso, limpa o formulário e avisa com toast
   function concluirEnvio(form) {
     var ok = document.querySelector(".alerta-sucesso");
     if (ok) ok.hidden = false;
+    registrarCadastro(form); // antes do reset(), enquanto os campos ainda têm valor
     form.reset();
     limparEstados(form);
+    renderizarHistorico();
     mostrarToast("Cadastro enviado com sucesso!");
   }
 
@@ -421,6 +510,7 @@
       var tipo = acao.dataset.acao;
       if (tipo === "fechar-toast") fecharToast();
       if (tipo === "cancelar-modal") fecharModal();
+      if (tipo === "limpar-historico") { limparCadastros(); mostrarToast("Histórico apagado."); }
       if (tipo === "confirmar-modal") {
         var form = formPendente;
         fecharModal();
