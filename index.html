@@ -36,7 +36,7 @@
     </nav>
   </header>
 
-  <main id="app" aria-live="polite"></main>
+  <main id="app" aria-live="polite" tabindex="-1"></main>
 
   <template id="rota-inicio">
     <section class="destaque" aria-labelledby="t-inicio">
@@ -128,11 +128,11 @@
       <span class="alerta-icone" aria-hidden="true">ℹ</span>
       <div><strong>Antes de começar:</strong> tenha em mãos seu CPF e CEP para preencher o cadastro mais rápido.</div>
     </div>
-    <div class="alerta alerta-sucesso" role="status">
+    <div class="alerta alerta-sucesso" role="status" hidden>
       <span class="alerta-icone" aria-hidden="true">✔</span>
       <div><strong>Cadastro enviado com sucesso!</strong> Em breve entraremos em contato pelo e-mail informado.</div>
     </div>
-    <div class="alerta alerta-erro" role="alert">
+    <div class="alerta alerta-erro" role="alert" hidden>
       <span class="alerta-icone" aria-hidden="true">⚠</span>
       <div><strong>Não foi possível enviar o formulário.</strong> Verifique os campos destacados em vermelho e tente novamente.</div>
     </div>
