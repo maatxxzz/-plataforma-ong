@@ -209,3 +209,18 @@ input[type=checkbox].campo-erro{outline:2px solid var(--cor-erro);outline-offset
 .botao-secundario:hover{background:var(--neutro-500);color:var(--neutro-100)}
 #historico{margin-bottom:var(--espaco-3)}
 .grafico{position:relative;max-width:40rem}
+
+/* Perfil de alto contraste: estados continuam identificados por texto e ARIA. */
+:root[data-contraste="alto"]{color-scheme:dark;--cor-primaria:#ffff00;--cor-primaria-escura:#ffff00;--cor-secundaria:#ffff00;--cor-secundaria-escura:#ffffff;--cor-apoio:#ffffff;--neutro-100:#000000;--neutro-200:#000000;--neutro-500:#ffffff;--neutro-700:#ffffff;--neutro-900:#ffffff;--cor-erro:#ffffff;--cor-erro-fundo:#000000}
+[data-contraste="alto"] header,[data-contraste="alto"] footer,[data-contraste="alto"] .submenu,[data-contraste="alto"] .toast,[data-contraste="alto"] .modal{background:#000000;color:#ffffff}
+[data-contraste="alto"] header .marca,[data-contraste="alto"] nav a,[data-contraste="alto"] .tem-submenu summary{color:#ffff00}
+[data-contraste="alto"] button,[data-contraste="alto"] .botao{background:#ffff00;color:#000000;border-color:#ffff00}
+[data-contraste="alto"] button:hover,[data-contraste="alto"] .botao:hover{background:#ffffff;color:#000000}
+[data-contraste="alto"] button:disabled,[data-contraste="alto"] .botao[aria-disabled="true"]{background:#000000;color:#ffffff;border-color:#ffffff;border-style:dashed}
+[data-contraste="alto"] input,[data-contraste="alto"] select,[data-contraste="alto"] textarea{background:#000000;color:#ffffff;border-color:#ffffff}
+[data-contraste="alto"] input::placeholder,[data-contraste="alto"] textarea::placeholder{color:#ffffff;opacity:1}
+[data-contraste="alto"] .badge,[data-contraste="alto"] .alerta,[data-contraste="alto"] .botao-secundario,[data-contraste="alto"] .toast-fechar{background:#000000;color:#ffffff;border:2px solid #ffffff}
+[data-contraste="alto"] :focus-visible{outline:3px solid #ffff00;outline-offset:3px}
+[data-contraste="alto"] .hamburguer,[data-contraste="alto"] .hamburguer::before,[data-contraste="alto"] .hamburguer::after{background:#ffff00}
+[data-contraste="alto"] .menu-toggle-input:checked~.menu-toggle-label .hamburguer{background:transparent}
+[data-contraste="alto"] .pular:focus{background:#000000;color:#ffff00}

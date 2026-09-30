@@ -7,6 +7,9 @@ import { iniciarValidacao } from './validacao.js';
 import { iniciarFormularios } from './formularios.js';
 import { iniciarFeedback } from './feedback.js';
 
+import { iniciarContraste } from './contraste.js';
+
+iniciarContraste();
 iniciarValidacao();
 iniciarFormularios();
 iniciarFeedback();
@@ -15,3 +18,5 @@ iniciarRoteador(function () {
   renderizarHistorico();
   criarGrafico();
 });
+
+document.addEventListener('semear:contraste-alterado', criarGrafico);
