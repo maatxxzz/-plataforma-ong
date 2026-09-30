@@ -208,3 +208,4 @@ input[type=checkbox].campo-erro{outline:2px solid var(--cor-erro);outline-offset
 .botao-secundario{background:var(--neutro-200);color:var(--neutro-900)}
 .botao-secundario:hover{background:var(--neutro-500);color:var(--neutro-100)}
 #historico{margin-bottom:var(--espaco-3)}
+.grafico{position:relative;max-width:40rem}
