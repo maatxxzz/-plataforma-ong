@@ -24,3 +24,7 @@ Ferramenta: `tests/contraste.cjs`, com Playwright/Chromium para obter as cores c
 ## Repetir
 
 Com o servidor local ativo e os requisitos descritos em `tests/README.md`, execute `node tests/contraste.cjs`. O teste aceita `SPA_BASE_URL` e `CHROMIUM_PATH`, assim como a suíte SPA. Verifica limite de 4,5:1 para os pares acima, ativação por Enter, persistência ao recarregar, troca com gravação indisponível e preferência de contraste do sistema. A suíte SPA também passou nos 11 cenários existentes. Essas verificações não estabelecem conformidade WCAG integral.
+
+## Correção da transição de tema
+
+Na execução remota, os 11 testes SPA passaram, mas a medição de contraste encontrou 2,43:1 no campo doador. O CSS animava o fundo durante 150 ms enquanto o texto já ficava branco, produzindo uma combinação temporária inadequada. A entrada no perfil alto agora desativa transições, inclusive dos pseudo-elementos, tornando a mudança imediata. O teste verifica explicitamente texto branco e fundo preto logo após ativar o modo; o limite de 4,5:1 foi preservado.
