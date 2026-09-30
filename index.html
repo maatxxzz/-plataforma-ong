@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Plataforma do Instituto Semear: apresentação, projetos e cadastro de voluntários e doadores.">
+  <title>Instituto Semear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="pular" href="#app">Pular para o conteúdo</a>
+  <header>
+    <a class="marca" href="#/inicio">Instituto Semear</a>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle-input" aria-label="Abrir menu" aria-controls="menu-principal">
+    <label for="menu-toggle" class="menu-toggle-label">
+      <span class="hamburguer"></span>
+    </label>
+    <nav aria-label="Principal" id="menu-principal">
+      <ul>
+        <li><a href="#/inicio" data-rota="inicio">Início</a></li>
+        <li><a href="#/sobre" data-rota="sobre">Sobre</a></li>
+        <li class="tem-submenu">
+          <details>
+            <summary>Projetos</summary>
+            <ul class="submenu">
+              <li><a href="#/projetos" data-rota="projetos">Ver todos os projetos</a></li>
+              <li><a href="#/projetos/t-vol" data-rota="projetos">Seja voluntário</a></li>
+              <li><a href="#/projetos/t-doa" data-rota="projetos">Campanhas de doação</a></li>
+            </ul>
+          </details>
+        </li>
+        <li><a href="#/cadastro" data-rota="cadastro">Participe</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="app" aria-live="polite"></main>
+
+  <template id="rota-inicio">
+    <section class="destaque" aria-labelledby="t-inicio">
+      <h1 id="t-inicio">Cada criança merece a chance de aprender</h1>
+      <p>Há dez anos oferecemos reforço escolar e alimentação a crianças da periferia. Você pode ajudar com seu tempo ou com uma doação.</p>
+      <img src="../imagens/livro-muda.svg" width="480" height="320"
+           alt="Ilustração de um livro aberto com uma muda brotando entre as páginas, símbolo do Instituto Semear">
+      <a class="botao" href="#/cadastro">Quero participar</a>
+    </section>
+
+    <section aria-labelledby="t-numeros">
+      <h2 id="t-numeros">Nosso trabalho</h2>
+      <div class="grade">
+        <article><h3>Reforço escolar</h3><p>Aulas de leitura e matemática em três turnos.</p></article>
+        <article><h3>Alimentação</h3><p>Café da manhã e almoço para 200 crianças.</p></article>
+        <article><h3>Apoio às famílias</h3><p>Orientação sobre benefícios e documentos.</p></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="t-contato">
+      <h2 id="t-contato">Fale com a gente</h2>
+      <address>
+        <p><strong>Endereço:</strong> Rua das Acácias, 120, Centro, São Paulo/SP</p>
+        <p><strong>Telefone:</strong> <a href="tel:+551140001234">(11) 4000-1234</a></p>
+        <p><strong>E-mail:</strong> <a href="mailto:contato@institutosemear.org.br">contato@institutosemear.org.br</a></p>
+        <p><strong>Horário:</strong> segunda a sexta, das 8h às 17h</p>
+      </address>
+    </section>
+  
+  </template>
+
+  <template id="rota-sobre">
+    <h1>Sobre o Instituto Semear</h1>
+    <section aria-labelledby="t-missao">
+      <h2 id="t-missao">Missão</h2>
+      <p>Garantir que crianças em vulnerabilidade tenham acesso à educação e à alimentação.</p>
+    </section>
+    <section aria-labelledby="t-hist">
+      <h2 id="t-hist">Nossa história</h2>
+      <h3>2016: o começo</h3>
+      <p>Um grupo de vizinhos abriu as portas de uma garagem para dar aulas de reforço.</p>
+      <h3>Hoje</h3>
+      <p>Atendemos 200 crianças com o trabalho de 40 voluntários.</p>
+    </section>
+    <section aria-labelledby="t-transp">
+      <h2 id="t-transp">Transparência</h2>
+      <p>Publicamos todo ano o relatório de atividades e a prestação de contas.</p>
+    </section>
+  
+  </template>
+
+  <template id="rota-projetos">
+    <h1>Projetos e serviços sociais</h1>
+
+    <section aria-labelledby="t-proj">
+      <h2 id="t-proj">Onde atuamos</h2>
+      <div class="grade">
+        <article><span class="badge badge-educacao">Educação</span><h3>Semear Leitura</h3><p>Rodas de leitura e biblioteca comunitária aos sábados.</p></article>
+        <article><span class="badge badge-alimentacao">Alimentação</span><h3>Prato Cheio</h3><p>Refeições diárias e oficinas de alimentação saudável.</p></article>
+        <article><span class="badge badge-educacao">Educação</span><h3>Futuro em Cartaz</h3><p>Orientação para jovens sobre estudo e primeiro emprego.</p></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="t-vol">
+      <h2 id="t-vol">Seja voluntário</h2>
+      <p>Você pode doar algumas horas por semana em uma destas atividades:</p>
+      <ul>
+        <li>Reforço escolar de leitura e matemática</li>
+        <li>Preparo e distribuição de refeições</li>
+        <li>Organização de eventos e da biblioteca</li>
+      </ul>
+      <a class="botao" href="#/cadastro/t-vol">Quero ser voluntário</a>
+    </section>
+
+    <section aria-labelledby="t-doa">
+      <h2 id="t-doa">Campanhas de doação</h2>
+      <div class="grade duas">
+        <article><span class="badge badge-doacao">Doação</span> <span class="badge badge-urgente">Urgente</span><h3>Kit material escolar</h3><p>R$ 60 garantem cadernos, lápis e mochila para uma criança.</p></article>
+        <article><span class="badge badge-doacao">Doação</span><h3>Semana de refeições</h3><p>R$ 30 garantem uma semana de almoço para uma criança.</p></article>
+      </div>
+      <p><a class="botao" href="#/cadastro/t-doa">Quero doar</a></p>
+    </section>
+
+    <aside aria-labelledby="t-ajuda">
+      <h2 id="t-ajuda">Como ajudar</h2>
+      <ol>
+        <li>Escolha entre ser voluntário ou fazer uma doação.</li>
+        <li>Preencha o cadastro correspondente.</li>
+        <li>Aguarde nosso contato por e-mail.</li>
+      </ol>
+    </aside>
+  
+  </template>
+
+  <template id="rota-cadastro">
+    <h1>Faça parte da nossa causa</h1>
+    <p class="dica">Campos com * são obrigatórios.</p>
+
+    <div class="alerta alerta-info" role="status">
+      <span class="alerta-icone" aria-hidden="true">ℹ</span>
+      <div><strong>Antes de começar:</strong> tenha em mãos seu CPF e CEP para preencher o cadastro mais rápido.</div>
+    </div>
+    <div class="alerta alerta-sucesso" role="status">
+      <span class="alerta-icone" aria-hidden="true">✔</span>
+      <div><strong>Cadastro enviado com sucesso!</strong> Em breve entraremos em contato pelo e-mail informado.</div>
+    </div>
+    <div class="alerta alerta-erro" role="alert">
+      <span class="alerta-icone" aria-hidden="true">⚠</span>
+      <div><strong>Não foi possível enviar o formulário.</strong> Verifique os campos destacados em vermelho e tente novamente.</div>
+    </div>
+
+
+    <section class="col-7" aria-labelledby="t-vol">
+      <h2 id="t-vol">Cadastro de voluntário</h2>
+      <form action="" method="get" onsubmit="return false">
+        <fieldset>
+          <legend>Dados pessoais</legend>
+          <label for="v-nome">Nome completo *</label>
+          <input type="text" id="v-nome" name="nome" required minlength="3" autocomplete="name">
+          <label for="v-cpf">CPF *</label>
+          <input type="text" id="v-cpf" name="cpf" required inputmode="numeric" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="000.000.000-00" title="Use o formato 000.000.000-00">
+          <label for="v-email">E-mail *</label>
+          <input type="email" id="v-email" name="email" required autocomplete="email">
+          <label for="v-tel">Telefone *</label>
+          <input type="tel" id="v-tel" name="telefone" required maxlength="15" pattern="\(\d{2}\)\s?\d{4,5}-\d{4}" placeholder="(11) 91234-5678" title="Use o formato (11) 91234-5678" autocomplete="tel">
+          <label for="v-nasc">Data de nascimento *</label>
+          <input type="date" id="v-nasc" name="nascimento" required>
+        </fieldset>
+        <fieldset>
+          <legend>Endereço</legend>
+          <label for="v-cep">CEP *</label>
+          <input type="text" id="v-cep" name="cep" required inputmode="numeric" maxlength="9" pattern="\d{5}-\d{3}" placeholder="00000-000" title="Use o formato 00000-000" autocomplete="postal-code">
+          <label for="v-end">Endereço e número *</label>
+          <input type="text" id="v-end" name="endereco" required autocomplete="address-line1">
+          <label for="v-cidade">Cidade *</label>
+          <input type="text" id="v-cidade" name="cidade" required autocomplete="address-level2">
+          <label for="v-uf">Estado *</label>
+          <select id="v-uf" name="estado" required>
+            <option value="">Selecione</option>
+            <option value="AC">AC</option>
+            <option value="AL">AL</option>
+            <option value="AP">AP</option>
+            <option value="AM">AM</option>
+            <option value="BA">BA</option>
+            <option value="CE">CE</option>
+            <option value="DF">DF</option>
+            <option value="ES">ES</option>
+            <option value="GO">GO</option>
+            <option value="MA">MA</option>
+            <option value="MT">MT</option>
+            <option value="MS">MS</option>
+            <option value="MG">MG</option>
+            <option value="PA">PA</option>
+            <option value="PB">PB</option>
+            <option value="PR">PR</option>
+            <option value="PE">PE</option>
+            <option value="PI">PI</option>
+            <option value="RJ">RJ</option>
+            <option value="RN">RN</option>
+            <option value="RS">RS</option>
+            <option value="RO">RO</option>
+            <option value="RR">RR</option>
+            <option value="SC">SC</option>
+            <option value="SP">SP</option>
+            <option value="SE">SE</option>
+            <option value="TO">TO</option>
+          </select>
+        </fieldset>
+        <fieldset>
+          <legend>Área de interesse *</legend>
+          <div class="opcao"><input type="radio" id="a-edu" name="area" value="educacao" required><label for="a-edu">Reforço escolar</label></div>
+          <div class="opcao"><input type="radio" id="a-ali" name="area" value="alimentacao"><label for="a-ali">Alimentação</label></div>
+          <div class="opcao"><input type="radio" id="a-eve" name="area" value="eventos"><label for="a-eve">Eventos</label></div>
+        </fieldset>
+        <label for="v-msg">Por que quer ser voluntário?</label>
+        <textarea id="v-msg" name="mensagem" rows="4" maxlength="500"></textarea>
+        <button type="submit">Enviar cadastro de voluntário</button>
+      </form>
+    </section>
+
+    <section class="col-5" aria-labelledby="t-doa">
+      <h2 id="t-doa">Cadastro de doador</h2>
+      <form action="" method="get" onsubmit="return false">
+        <fieldset>
+          <legend>Dados do doador</legend>
+          <label for="d-nome">Nome completo *</label>
+          <input type="text" id="d-nome" name="nome" required minlength="3" autocomplete="name">
+          <label for="d-email">E-mail *</label>
+          <input type="email" id="d-email" name="email" required autocomplete="email">
+        </fieldset>
+        <fieldset>
+          <legend>Sua doação</legend>
+          <label for="d-valor">Valor em reais *</label>
+          <input type="number" id="d-valor" name="valor" required min="5" step="0.01" inputmode="decimal">
+          <label for="d-freq">Frequência *</label>
+          <select id="d-freq" name="frequencia" required>
+            <option value="">Selecione</option>
+            <option value="unica">Doação única</option>
+            <option value="mensal">Doação mensal</option>
+          </select>
+        </fieldset>
+        <div class="opcao"><input type="checkbox" id="d-lgpd" name="aceite" required><label for="d-lgpd">Autorizo o uso dos meus dados para contato sobre a doação. *</label></div>
+        <button type="submit">Enviar cadastro de doador</button>
+      </form>
+    </section>
+
+    <section class="exemplo-modal" aria-labelledby="t-exemplo-modal">
+      <h2 id="t-exemplo-modal">Exemplo: confirmação de doação</h2>
+      <p class="dica">Assim é a janela que confirma o envio de uma doação recorrente.</p>
+      <div class="modal-fundo-estatico">
+        <div class="modal">
+          <h3 id="t-modal">Confirmar doação mensal?</h3>
+          <p>Você fará uma doação de <strong>R$ 30,00</strong> todo mês para o Instituto Semear. Você pode cancelar quando quiser pelo e-mail de confirmação.</p>
+          <div class="acoes">
+            <button type="button" class="botao-secundario">Cancelar</button>
+            <button type="button">Confirmar doação</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+  </template>
+
+  <footer>
+    <p>&copy; 2026 Instituto Semear. Projeto fictício para fins educacionais.</p>
+    <p><a href="#/cadastro">Seja voluntário ou doador</a></p>
+  </footer>
+
+  <script src="js/scripts.js" defer></script>
+</body>
+</html>
