@@ -198,3 +198,10 @@ footer a{color:var(--cor-secundaria)}
 .modal .acoes{display:flex;gap:var(--espaco-3);justify-content:flex-end;margin-top:var(--espaco-4)}
 .modal .botao-secundario{background:var(--neutro-200);color:var(--neutro-900)}
 .modal .botao-secundario:hover{background:var(--neutro-500);color:var(--neutro-100)}
+
+/* ===== Estados de validação aplicados pelo JavaScript ===== */
+.msg-campo{margin:0;font-size:var(--texto-pequeno);font-weight:600;color:var(--cor-erro)}
+.msg-campo::before{content:"⚠ "}
+input.campo-erro,select.campo-erro,textarea.campo-erro,fieldset.campo-erro{border-color:var(--cor-erro);background:var(--cor-erro-fundo)}
+input.campo-ok,select.campo-ok,textarea.campo-ok{border-color:var(--cor-apoio)}
+input[type=checkbox].campo-erro{outline:2px solid var(--cor-erro);outline-offset:2px}
