@@ -272,9 +272,8 @@
     <p><a href="#/cadastro">Seja voluntário ou doador</a></p>
   </footer>
 
-  <!-- Biblioteca externa (Chart.js via CDN). Com defer, os dois scripts rodam em ordem:
-       primeiro a biblioteca, depois o nosso scripts.js -->
+  <!-- Chart.js é opcional; o módulo de gráfico trata sua indisponibilidade. -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" defer></script>
-  <script src="js/scripts.js" defer></script>
+  <script type="module" src="js/scripts.js"></script>
 </body>
 </html>
