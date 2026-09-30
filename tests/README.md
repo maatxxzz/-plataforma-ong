@@ -16,11 +16,12 @@ cd /workspace/-plataforma-ong
 node tests/spa.cjs
 ```
 
-Se Playwright não estiver instalado, instale-o fora do repositório:
+Playwright agora é instalado com as dependências do projeto:
 
 ```sh
-npm install --prefix /tmp/semear-tests --no-save playwright
-NODE_PATH=/tmp/semear-tests/node_modules node tests/spa.cjs
+npm ci
+npx playwright install chromium
+CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")" node tests/spa.cjs
 ```
 
 O runner usa `/usr/bin/chromium` por padrão. Defina `CHROMIUM_PATH` para outro executável instalado e `SPA_BASE_URL` se o servidor usar outra porta.
