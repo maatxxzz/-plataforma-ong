@@ -41,7 +41,7 @@ Os módulos expõem funções específicas e trocam dados por parâmetros e call
 
 ## Pré-requisitos
 
-Para executar o site: Git, Python 3 e navegador moderno com suporte a ES Modules e localStorage. Não é necessário Node.js para a aplicação. Para testes: Node.js, Playwright e Chromium. Os testes foram executados com Node.js 24 e Python 3.12; não há versões fixadas pelo projeto.
+Para executar o site: Git, Python 3 e navegador moderno com suporte a ES Modules e localStorage. Node.js 22.12 ou superior e npm são necessários para a build com Vite. O código-fonte ainda pode ser servido diretamente por Python. Para testes: Node.js, Playwright e Chromium. Os testes foram executados com Node.js 24 e Python 3.12. As ferramentas de build possuem versões fixadas no package-lock.json.
 
 ## Instalação e execução local
 
@@ -53,11 +53,11 @@ python3 -m http.server 8000 --bind 127.0.0.1
 
 No Windows, se necessário, use `py -3 -m http.server 8000 --bind 127.0.0.1`. Abra `http://127.0.0.1:8000` no navegador local e encerre o servidor com Ctrl+C. Se a porta estiver ocupada, escolha outra, por exemplo 8001.
 
-Não abra diretamente por `file://`: os módulos JavaScript precisam ser servidos por HTTP. O projeto não possui package.json nem dependências de instalação para executar a SPA. Chart.js e fontes são obtidos durante o carregamento, de `cdnjs.cloudflare.com`, `fonts.googleapis.com` e `fonts.gstatic.com`. O funcionamento local tem fallback para recursos externos indisponíveis.
+Não abra diretamente por `file://`: os módulos JavaScript precisam ser servidos por HTTP. Para desenvolvimento com Vite, execute `npm ci` e `npm run dev`. Para produção, execute `npm run build` e publique o conteúdo de `dist/`. Chart.js e fontes são obtidos durante o carregamento, de `cdnjs.cloudflare.com`, `fonts.googleapis.com` e `fonts.gstatic.com`. O funcionamento local tem fallback para recursos externos indisponíveis.
 
 ## Build e testes
 
-Não existe etapa de build: HTML, CSS e JavaScript são servidos diretamente. Também não existe comando `npm run build` ou `npm test` neste projeto.
+A build usa Vite para empacotar e minificar JavaScript e CSS, seguida de html-minifier-terser para HTML. Execute `npm ci`, `npm run build` e `npm run preview`. Para testar essa build, execute `SPA_BASE_URL=http://127.0.0.1:4173 npm test` e `SPA_BASE_URL=http://127.0.0.1:4173 npm run test:contraste`. Playwright e Chromium continuam sendo requisitos externos de teste. Consulte [medição da build](docs/build.md).
 
 Com o servidor ativo em outra sessão, instale Playwright fora do checkout:
 
@@ -95,3 +95,7 @@ Adota-se Conventional Commits (`tipo: descrição`), com tipos como `feat`, `fix
 ## Limitações
 
 O projeto é uma demonstração educacional: não possui backend, autenticação, envio real de cadastros ou processamento de pagamentos. Os dados ficam no navegador e não são sincronizados. Evite dados pessoais reais nos testes. A navegação funciona sem conexão após carregar a SPA; recarregar totalmente offline exige recursos adicionais, como service worker, ainda não implementados. O gráfico e as fontes dependem de acesso aos respectivos CDNs.
+
+## Perfil de alto contraste
+
+O botão Alto contraste alterna o perfil visual, indica seu estado com `aria-pressed` e salva a preferência no navegador. Sem preferência salva, respeita `prefers-contrast: more`. O modo usa preto, branco e amarelo, com estados identificados também por texto e ARIA. Consulte [medições de contraste](docs/contraste.md); execute `node tests/contraste.cjs` para repetir as verificações. Não existe dark mode separado.
