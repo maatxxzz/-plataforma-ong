@@ -224,3 +224,6 @@ input[type=checkbox].campo-erro{outline:2px solid var(--cor-erro);outline-offset
 [data-contraste="alto"] .hamburguer,[data-contraste="alto"] .hamburguer::before,[data-contraste="alto"] .hamburguer::after{background:#ffff00}
 [data-contraste="alto"] .menu-toggle-input:checked~.menu-toggle-label .hamburguer{background:transparent}
 [data-contraste="alto"] .pular:focus{background:#000000;color:#ffff00}
+/* A entrada no alto contraste é imediata: evita fundos intermediários
+   claros com texto branco durante transições de tema. */
+[data-contraste="alto"] *,[data-contraste="alto"] *::before,[data-contraste="alto"] *::after{transition:none!important}

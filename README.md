@@ -57,28 +57,22 @@ Não abra diretamente por `file://`: os módulos JavaScript precisam ser servido
 
 ## Build e testes
 
-A build usa Vite para empacotar e minificar JavaScript e CSS, seguida de html-minifier-terser para HTML. Execute `npm ci`, `npm run build` e `npm run preview`. Para testar essa build, execute `SPA_BASE_URL=http://127.0.0.1:4173 npm test` e `SPA_BASE_URL=http://127.0.0.1:4173 npm run test:contraste`. Playwright e Chromium continuam sendo requisitos externos de teste. Consulte [medição da build](docs/build.md).
+A build usa Vite para empacotar e minificar JavaScript e CSS, seguida de html-minifier-terser para HTML. Execute `npm ci`, `npm run build` e `npm run preview`. Para testar essa build, execute `SPA_BASE_URL=http://127.0.0.1:4173 npm test` e `SPA_BASE_URL=http://127.0.0.1:4173 npm run test:contraste`. Playwright está incluído nas dependências de desenvolvimento; Chromium deve ser instalado para os testes. Consulte [medição da build](docs/build.md).
 
-Com o servidor ativo em outra sessão, instale Playwright fora do checkout:
-
-```sh
-npm install --prefix /tmp/semear-tests --no-save playwright
-NODE_PATH=/tmp/semear-tests/node_modules node tests/spa.cjs
-```
-
-Os comandos acima são para Linux/macOS com shell compatível. O runner espera Chromium em `/usr/bin/chromium`. Quando necessário, instale o navegador de teste:
+Para instalar o navegador de teste:
 
 ```sh
-NODE_PATH=/tmp/semear-tests/node_modules /tmp/semear-tests/node_modules/.bin/playwright install chromium
+npm ci
+npx playwright install chromium
 ```
 
-Consulte o executável instalado com:
+O runner usa `/usr/bin/chromium` por padrão. Para usar o navegador instalado por Playwright, execute:
 
 ```sh
-NODE_PATH=/tmp/semear-tests/node_modules node -e "console.log(require('playwright').chromium.executablePath())"
+CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")" SPA_BASE_URL=http://127.0.0.1:4173 npm test
 ```
 
-Configure `CHROMIUM_PATH` com esse caminho antes de executar os testes. É possível apontar `SPA_BASE_URL` para outra porta. No ambiente de desenvolvimento preparado, Playwright já está disponível e basta executar `node tests/spa.cjs` com o servidor ativo.
+Use o mesmo CHROMIUM_PATH e SPA_BASE_URL com `npm run test:contraste`. O servidor precisa estar ativo em outra sessão.
 
 A suíte verifica 11 cenários de navegação, validação, persistência, modais, histórico malformado, erros de armazenamento e desconexão. Cada cenário falha diante de exceções JavaScript não tratadas. Os recursos CDN são bloqueados propositalmente para testar o fallback; a renderização real do gráfico não é coberta. Consulte [instruções de testes](tests/README.md) e [relatório de validação](docs/validacao-spa.md).
 
@@ -99,3 +93,7 @@ O projeto é uma demonstração educacional: não possui backend, autenticação
 ## Perfil de alto contraste
 
 O botão Alto contraste alterna o perfil visual, indica seu estado com `aria-pressed` e salva a preferência no navegador. Sem preferência salva, respeita `prefers-contrast: more`. O modo usa preto, branco e amarelo, com estados identificados também por texto e ARIA. Consulte [medições de contraste](docs/contraste.md); execute `node tests/contraste.cjs` para repetir as verificações. Não existe dark mode separado.
+
+## Hospedagem e CI/CD
+
+O deploy foi preparado para GitHub Pages por GitHub Actions. O workflow valida PRs para main/develop e publica dist após build e testes em atualizações da main. É necessário habilitar Settings → Pages → GitHub Actions e conferir o deployment remoto. Consulte [configuração de deploy](docs/deploy.md). A presença do workflow não comprova publicação.
